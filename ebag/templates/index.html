@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eBags Shopping</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa; /* Changed background color */
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        .navbar h1 {
+            color: #007bff; /* Changed navbar title color */
+            margin: 0; /* Removed margin-left */
+        }
+
+        .navbar a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #007bff; /* Changed hover color */
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 30px;
+            justify-items: center;
+        }
+
+        .product {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 6px;
+            transition: box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align content */
+        }
+
+        .product:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%; /* Ensuring all images take up full width */
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            max-height: 300px; /* Limiting maximum height */
+            object-fit: cover; /* Ensuring images retain aspect ratio */
+        }
+
+        .product-info {
+            padding-bottom: 15px;
+            flex-grow: 1; /* Allow product info to expand */
+        }
+
+        .buy-now-button {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #007bff; /* Changed button color */
+            color: #fff;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .buy-now-button:hover {
+            background-color: #0056b3; /* Changed hover color */
+        }
+
+        /* Adjusted search form styles */
+        .form-inline {
+            margin-right: 20px;
+        }
+
+        .form-control {
+            width: 250px;
+        }
+
+        .btn-outline-success {
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-outline-success:hover {
+            color: #fff;
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <h1 class="mr-auto">eBags</h1> <!-- Converted navbar title to h1 -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto"> <!-- Adjusted margin for search form -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">ALL PRODUCTS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}?category=7">HP BAGS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}?category=5">HAND BAGS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}?category=9">TRAVEL BAG</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'index' %}?category=8">SCHOOL BAG</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'view_cart' %}">View Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline" method="GET" action="{% url 'index' %}">
+                        <input type="text" name="search" class="form-control" placeholder="Search for products..">
+                        <button type="submit" class="btn btn-outline-success">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2>Products</h2>
+    <div class="container">
+        <div class="product-list">
+            {% for product in products %}
+            <div class="product">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="height:300px">
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p class="price">Price: &#8377;{{ product.price }} INR</p>
+                    <a class="buy-now-button" href="{% url 'product_detail' product.id %}">View Details</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home | Bag Website</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header, Admin Title, Section Title, Product List, Navigation, and other styles... */
+
+        /* Navigation */
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            position: absolute;
+            right: auto;
+            top: 29px;
+            right: 20px;
+        }
+
+        .nav-items {
+            display: inline;
+            font-size: 18px;
+        }
+
+        .nav-items a {
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 15px;
+            transition: color 0.3s ease-in-out;
+            border: 1px solid #007bff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .nav-items a:hover {
+            background-color: #5f7878;
+            color: #fff;
+        }
+
+        /* Styling for "Add Category," "Add Bag," and "Home" */
+        .add-category-link,
+        .add-bag-link,
+        .home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .add-category-link {
+            background-color: #28a745;
+        }
+
+        .add-bag-link {
+            background-color: #007bff;
+        }
+
+        .home-link {
+            background-color: #333;
+        }
+
+        .add-category-link:hover,
+        .add-bag-link:hover,
+        .home-link:hover {
+            opacity: 0.8;
+        }
+
+        /* Product List Styling */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        .product-lists {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(158, 150, 150, 0.1);
+            overflow: hidden;
+        }
+
+        .product-details {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column layout */
+            grid-gap: 10px; /* Adjust the gap between grid items */
+            padding: 20px;
+        }
+
+        .product-details > * {
+            text-align: left; /* Align text to the left */
+            margin: 0; /* Reset margin */
+        }
+
+        .product-name {
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #7c1c1c;
+        }
+
+        .product-description,
+        .product-price,
+        .product-details,
+        .product-quantity,
+        .product-image {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .image {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .link {
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .edit-link {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .delete-link {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .add-pen-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #678d70;
+            color: #08ec35;
+            margin-top: 20px;
+        }
+
+        .edit-link:hover,
+        .delete-link:hover,
+        .add-pen-link:hover {
+            opacity: 0.8;
+        }
+
+        .no-products {
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        /* Admin Title Styling */
+        .admin-title {
+            text-align: center;
+            font-size: 28px;
+            margin-top: 50px;
+            color: #007bff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            background-color: #938888;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <ul class="nav-list">
+        <li class="nav-items">
+            <a href="{% url 'add_category' %}" class="add-category-link">Add Category</a>
+            <a href="{% url 'add_product' %}" class="add-bag-link">Add Bag</a>
+            <a href="{% url 'home' %}" class="home-link">Home</a>
+            <a href="{% url 'login' %}" class="home-link">Logout</a>
+        </li>
+    </ul>
+    <h1 class="admin-title">Admin Panel</h1>
+    <h2 class="section-title">Bag Products</h2>
+    <ul class="product-list">
+        {% for product in products %}
+            <li class="product-lists">
+                <div class="product-details">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="image">
+                    <strong class="product-name">{{ product.name }}</strong>
+                    <p class="product-description">Description: {{ product.description }}</p>
+                    <p class="product-price">Price: &#8377;{{ product.price }} INR</p>
+                    <p class="product-details">Category: {{ product.category }}</p>
+                    <p class="product-details">Manufacture: {{ product.manufacture }}</p>
+                    <p class="product-quantity">Availability: {{ product.quantity }}</p>
+                    <div>
+                        <a href="{% url 'edit_product' product.id %}" class="link edit-link">Edit</a>
+                        <a href="{% url 'delete_product' product.id %}" class="link delete-link">Delete</a>
+                    </div>
+                </div>
+            </li>
+        {% empty %}
+            <p class="no-products">No Bag products available.</p>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_product' %}" class="link add-pen-link">Add Bag</a>
+
+</body>
+</html>

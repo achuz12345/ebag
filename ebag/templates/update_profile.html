@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <!-- Include necessary CSS and stylesheets -->
+</head>
+<body>
+    <!-- Your update profile form goes here -->
+    <form method="POST" action="{% url 'update_profile_submit' %}">
+        <!-- Add your form fields -->
+        <!-- For example: -->
+        <input type="text" name="username" placeholder="Username">
+        <input type="email" name="email" placeholder="Email">
+        <!-- Add other fields as needed -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
